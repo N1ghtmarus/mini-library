@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Авторизация
+{% endblock %}
+
+{% block content %}
+<div class="u-clearfix u-sheet u-sheet-1">
+  <h2 class="u-custom-font u-font-ubuntu u-text u-text-default u-text-1">Вход в аккаунт</h2>
+  <div class="u-border-3 u-border-grey-dark-1 u-line u-line-horizontal u-line-1"></div>
+    <div class="u-form u-form-1">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit">
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

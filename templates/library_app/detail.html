@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extrahead %}
+  <link rel="stylesheet" href={% static "css/Post-Template.css" %}>
+{% endblock %}
+
+{% block title %}
+    {{ book.name }}
+{% endblock %}
+
+{% block content %}
+    <div class="u-clearfix u-sheet u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
+        <div class="u-container-style u-expanded-width u-post-details u-post-details-1">
+        <div class="u-container-layout u-valign-middle u-container-layout-1">
+            <img alt="" class="u-blog-control u-expanded-width u-image u-image-default u-image-1" src="{% if book.image %}{{ book.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+            <h2 class="u-blog-control u-text u-text-1">{{ book.name }}</h2>
+            <h5 class="u-blog-control u-text u-text-1">Пользователь, добавивший книгу: {{ book.user.username }}</h5>
+            <h4 class="u-blog-control u-text u-text-1">{{ book.price }} ₽</h4>
+        <div class="u-blog-control u-metadata u-metadata-1">
+          <span class="u-meta-date u-meta-icon">{{ book.description|linebreaks }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

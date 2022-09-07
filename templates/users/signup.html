@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Зарегистрироваться
+{% endblock %}
+
+{% block javascript %}
+  <script>
+    $(document).ready(function () {
+        $('#id_username').keyup(function () {
+            $.ajax({
+                data: $(this).serialize(),
+                url: "{% url 'users:validate_username' %}",
+                success: function (response) {
+                    if (response.is_taken == true) {
+                        $('#id_username').removeClass('is-valid').addClass('is-invalid');
+                        $('#id_username').after('<div class="invalid-feedback d-block" id="usernameError" style="color:red">Пользователь с таким логином уже существует</div>')
+                    }
+                    else {
+                        $('#id_username').removeClass('is-invalid').addClass('is-valid');
+                        $('#usernameError').remove();
+
+                    }
+                },
+                error: function (response) {
+                    console.log(response.responseJSON.errors)
+                }
+            });
+            return false;
+        });
+        
+        $('#id_phone_number').keyup(function () {
+          $.ajax({
+              data: $(this).serialize(),
+              url: "{% url 'users:validate_phone_number' %}",
+              success: function (response) {
+                  if (response.is_taken == true) {
+                      $('#id_phone_number').removeClass('is-valid').addClass('is-invalid');
+                      $('#id_phone_number').after('<div class="invalid-feedback d-block" id="usernameError" style="color:red">Этот номер уже занят</div>')
+                  }
+                  else {
+                      $('#id_phone_number').removeClass('is-invalid').addClass('is-valid');
+                      $('#usernameError').remove();
+
+                  }
+              },
+              error: function (response) {
+                  console.log(response.responseJSON.errors)
+              }
+          });
+          return false;
+      });
+    })
+  </script>
+{% endblock %}
+
+{% block content %}
+<div class="u-clearfix u-sheet u-sheet-1">
+  <h2 class="u-custom-font u-font-ubuntu u-text u-text-default u-text-1">Регистрация</h2>
+  <div class="u-border-3 u-border-grey-dark-1 u-line u-line-horizontal u-line-1"></div>
+    <div class="u-form u-form-1">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit">
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

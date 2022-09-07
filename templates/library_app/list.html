@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href={% static "css/list.css" %}>
+{% endblock %}
+
+{% block title %}
+    Книги
+{% endblock %}
+
+{% block content %}
+<div class="u-clearfix u-sheet u-sheet-1">
+  <div class="u-blog u-blog-1">
+    <div class="u-repeater u-repeater-1">
+      {% for book in object_list %}
+      <div class="u-blog-post u-repeater-item">
+        <div class="u-container-layout u-similar-container u-valign-bottom-xs u-valign-top-lg u-valign-top-md u-valign-top-sm u-valign-top-xl u-container-layout-1">
+          <a href="{{ book.get_absolute_url }}">
+            <img src="{% if book.image %}{{ book.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" alt="" class="u-blog-control u-image u-image-default u-image-1">
+          </a>  
+          <h2 class="u-blog-control u-text u-text-1">
+            <a class="u-post-header-link" href="#"></a>
+          </h2> 
+          <h3 class="u-blog-control u-post-content u-text u-text-2">{{ book.name }}</h3>
+          <div class="u-blog-control u-metadata u-metadata-1">
+            <span class="u-meta-date u-meta-icon">{{ book.price }} ₽</span>
+          </div>
+          <a href="{{ book.get_absolute_url }}" class="u-blog-control u-border-2 u-border-grey-dark-1 u-btn u-btn-rectangle u-button-style u-none u-btn-1">Подробнее</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
